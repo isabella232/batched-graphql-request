@@ -1,35 +1,19 @@
-# http-link-dataloader
+# batched-graphql-client
 
-[![CircleCI](https://circleci.com/gh/prisma/http-link-dataloader.svg?style=shield)](https://circleci.com/gh/prisma/http-link-dataloader) [![npm version](https://badge.fury.io/js/http-link-dataloader.svg)](https://badge.fury.io/js/http-link-dataloader)
-
-📚📡 HTTP Apollo Link with batching & caching provided by dataloader.
-
-## Idea
-
-A Apollo Link that batches requests both in Node and the Browser.
-You may ask what's the difference to [apollo-link-batch-http](https://github.com/apollographql/apollo-link/tree/master/packages/apollo-link-batch-http).
-Instead of having a time-frame/fixed cache size based batching approach like in `apollo-link-batch-http`, this library uses [dataloader](https://github.com/facebook/dataloader) for batching requests. It is a more generic approach just depending on the Node.JS event loop that batches all consecutive queries directly.
-The main use-case for this library is the usage from a [`graphql-yoga`](https://github.com/graphcool/graphql-yoga) server using [`prisma-binding`](https://github.com/graphcool/prisma-binding), but it can be used in any environment, even the browser as the latest `dataloader` version also runs in browser environments.
+[![npm version](https://badge.fury.io/js/batched-graphql-client.svg)](https://badge.fury.io/js/http-link-dataloader)
 
 ## Usage
 
 ```ts
-import { HTTPLinkDataloader } from 'http-link-dataloader'
-
-const link = new HTTPLinkDataloader()
+import { BatchedGraphQLClient } from 'batched-graphql-client'
 
 const token = 'Auth Token'
 
-const httpLink = new HTTPLinkDataloader({
+const link = new BatchedGraphQLClient({
   uri: `api endpoint`,
   headers: { Authorization: `Bearer ${token}` },
 })
 ```
-
-## Caching behavior
-
-Note that the dataloader cache aggressively caches everything! That means if you don't want to cache anymore, just create a new instance of `BatchedHTTPLink`.
-A good fit for this is every incoming HTTP request in a server environment - on each new HTTP request a new `BatchedHTTPLink` instance is created.
 
 ## Batching
 
